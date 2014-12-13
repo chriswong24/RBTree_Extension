@@ -170,15 +170,36 @@ static VALUE rbt_init(VALUE self){
 	rb_iv_set(self, "@root", n_node);
 	rb_iv_set(self, "@size", INT2NUM(0));
 
+	Node *x;
+	Data_Get_Struct(rb_iv_get(self, "@root"), Node, x);
+	printf("x_init->key: %d\n", x->key);	
+
 	return self;
 }
 
-static VALUE rbt_add(VALUE key) {
+static VALUE rbt_add(VALUE self, VALUE key) {
+	return key;
 
 }
 
-static VALUE rbt_insert(VALUE x) {
-	
+static VALUE rbt_insert(VALUE self, VALUE x) {
+	return x;
+}
+
+static VALUE rbt_insert_helper(VALUE self, VALUE z) {
+
+	Node y;
+	y = set_nil(y);
+	Node *y_ptr = &y;
+	// y = ALLOC(Node);
+
+	Node *x;
+	Data_Get_Struct(rb_iv_get(self, "@root"), Node, x);
+	printf("x->key: %d\n", x->key);
+
+
+
+	return z;
 }
 
 void Init_RBTree(){
@@ -223,5 +244,6 @@ void Init_RBTree(){
 	
 	rb_define_method(cRBTree, "add", rbt_add, 1);
 	rb_define_method(cRBTree, "insert", rbt_insert, 1);
+	rb_define_method(cRBTree, "insert_helper", rbt_insert_helper, 1);
 }
 
