@@ -30,13 +30,13 @@ Node set_nil(Node node){
 	return node;
 }
 
+/***************************
+** Node class and methods ** 
+****************************/
 
-//Node class methods
-
-// Class Node
-//   def initialize(key, color = "red")
-//        ...
-
+// class Node
+//		def initialize(key, color = "red")
+// 			...
 static VALUE node_init(int argc, VALUE *argv, VALUE self){
 	
 	VALUE color;
@@ -57,7 +57,7 @@ static VALUE node_init(int argc, VALUE *argv, VALUE self){
 	rb_iv_set(self, "@color", color);
 
 	Node nil_node;
-	nil_node = set_nil(nil_node);
+	nil_node = set_nil(nil_node); // def set_nil
 
 	printf("nil_node.key: %d", nil_node.key);
 
@@ -81,7 +81,7 @@ static VALUE node_init(int argc, VALUE *argv, VALUE self){
 	return self;
 }
 
-
+// in Node class, def black?
 static VALUE node_black(VALUE self){
 
 	char *node_color;
@@ -100,6 +100,7 @@ static VALUE node_black(VALUE self){
 	return Qnil; // Error if reaches this point
 }
 
+// in Node class, def red?
 static VALUE node_red(VALUE self){
 	char *node_color;
 
@@ -117,10 +118,12 @@ static VALUE node_red(VALUE self){
 	return Qnil; // Error if reaches this point
 }
 
-/*******************
-** NilNode methods *
-********************/
+/******************************
+** NilNode class and methods **
+*******************************/
 
+// In NilNode class
+//		def initialize
 static VALUE NilNode_init(VALUE self){
 
 	rb_iv_set(self, "@color", rb_str_new2("black"));
@@ -132,13 +135,17 @@ static VALUE NilNode_init(VALUE self){
 	return self;
 }
 
+// In NildNode class, def nil?
 static VALUE NilNode_nil(VALUE self){
 	return Qtrue;
 }
 
-/*******************
-** RBTree methods **
-********************/
+/*****************************
+** RBTree class and methods **
+******************************/
+
+// RBTree class
+//		def initialize
 static VALUE rbt_init(VALUE self){
 
 	//klass = Data_Wrap_Struct
@@ -158,10 +165,20 @@ static VALUE rbt_init(VALUE self){
 
 	n_node = Data_Wrap_Struct(cNilNode, NULL, free, nil_node);
 	rb_obj_call_init(n_node, 0, 0);
+
+	// class attributes and accessors
 	rb_iv_set(self, "@root", n_node);
 	rb_iv_set(self, "@size", INT2NUM(0));
 
 	return self;
+}
+
+static VALUE rbt_add(VALUE key) {
+
+}
+
+static VALUE rbt_insert(VALUE x) {
+	
 }
 
 void Init_RBTree(){
@@ -204,5 +221,7 @@ void Init_RBTree(){
 	// RBTree Methods
 	rb_define_method(cRBTree, "initialize", rbt_init, 0);
 	
-
+	rb_define_method(cRBTree, "add", rbt_add, 1);
+	rb_define_method(cRBTree, "insert", rbt_insert, 1);
 }
+
